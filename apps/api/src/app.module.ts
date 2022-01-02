@@ -1,8 +1,17 @@
-import { Module } from "@nestjs/common";
-import { TodoModule } from "./modules/todo/todo.module";
+import { Module } from '@nestjs/common';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import * as path from 'path';
+
+import { TodoModule } from './modules/todo/todo.module';
 
 @Module({
-  imports: [TodoModule],
+  imports: [
+    ServeStaticModule.forRoot({
+      rootPath: path.join(__dirname, '..', 'web'),
+      exclude: ['/api*'],
+    }),
+    TodoModule,
+  ],
   controllers: [],
   providers: [],
 })

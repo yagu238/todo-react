@@ -1,11 +1,11 @@
-import styles from "./app.module.scss";
+import styles from './app.module.scss';
 
-import { ReactComponent as Logo } from "./logo.svg";
+import { ReactComponent as Logo } from './logo.svg';
 // import star from "./star.svg";
 
-import React, { useState, useEffect } from "react";
-import { todoService } from "../lib/apis/todo";
-import { Todo } from "@todo/api-interfaces";
+import React, { useState, useEffect } from 'react';
+import { todoService } from '../lib/apis/todo';
+import { Todo } from '@todo/api-interfaces';
 
 export function App() {
   const [todos, setTodos] = useState<Todo[]>([]);

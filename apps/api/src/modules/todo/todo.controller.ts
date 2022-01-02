@@ -1,7 +1,7 @@
-import { Controller, Get } from "@nestjs/common";
-import { TodoService } from "./todo.service";
+import { Controller, Get } from '@nestjs/common';
+import { TodoService } from './todo.service';
 
-@Controller("todos")
+@Controller('api/todos')
 export class TodoController {
   constructor(private todoService: TodoService) {}
 

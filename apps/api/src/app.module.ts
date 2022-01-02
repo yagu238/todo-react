@@ -7,7 +7,7 @@ import { TodoModule } from './modules/todo/todo.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', 'web'),
+      rootPath: path.join(__dirname, '..', 'client'),
       exclude: ['/api*'],
     }),
     TodoModule,

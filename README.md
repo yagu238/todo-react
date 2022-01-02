@@ -24,3 +24,13 @@ $ npm run build
 $ docker build .
 $ docker run -p 3000:3000 -e PORT=3000
 ```
+
+## Cloud Run
+
+```
+$ gcloud run deploy
+```
+
+## Access
+
+https://todo-2xsan3zhba-an.a.run.app/

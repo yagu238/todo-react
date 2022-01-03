@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Todo } from '@todo/api-interfaces';
+import { Todo, CreateTodoDTO, UpdateTodoDTO } from '@todo/api-interfaces';
 import { Repository } from 'typeorm';
 import { TodoEntiry } from '../../entities/todo.entity';
 
@@ -12,10 +12,23 @@ export class TodoService {
   ) {}
 
   async findAll(): Promise<Todo[]> {
-    const entities = await this.todosRepository.find();
+    const entities = await this.todosRepository.find({
+      order: { createdAt: 'ASC' },
+    });
     return entities.map((e) => {
       const todo: Todo = { ...e };
       return todo;
+    });
+  }
+
+  async create(dto: CreateTodoDTO): Promise<void> {
+    await this.todosRepository.insert(dto);
+  }
+
+  async update(id: number, dto: UpdateTodoDTO): Promise<void> {
+    await this.todosRepository.update(id, {
+      ...dto,
+      updatedAt: new Date(),
     });
   }
 }

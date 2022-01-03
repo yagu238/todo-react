@@ -12,12 +12,8 @@ export class TodoService {
   ) {}
 
   async findAll(): Promise<Todo[]> {
-    const entities = await this.todosRepository.find({
+    return await this.todosRepository.find({
       order: { createdAt: 'ASC' },
-    });
-    return entities.map((e) => {
-      const todo: Todo = { ...e };
-      return todo;
     });
   }
 

@@ -1,7 +1,7 @@
 export interface Todo {
-  id: string;
+  id: number;
   title: string;
   completed: boolean;
-  createdAt: number;
-  updatedAt: number;
+  createdAt: Date;
+  updatedAt: Date;
 }

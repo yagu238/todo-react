@@ -14,8 +14,11 @@ export class TodoEntiry {
   @Column({ name: 'title', length: 64, comment: 'タイトル' })
   readonly title: string;
 
-  @Column({ name: 'completed', comment: '完了フラグ', default: false })
+  @Column({ name: 'is_completed', comment: '完了フラグ', default: false })
   readonly completed: boolean;
+
+  @Column({ name: 'is_deleted', comment: '削除フラグ', default: false })
+  readonly deleted: boolean;
 
   @CreateDateColumn({ name: 'created_at', comment: '作成日時' })
   readonly createdAt: Date;

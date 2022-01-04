@@ -28,4 +28,12 @@ export class TodoApi {
       headers: { 'Content-Type': 'application/json' },
     }).then((res) => res);
   }
+
+  delete(id: number): Promise<Response> {
+    const url = new URL(`${this.baseUrl}/todos/${id}`);
+    return fetch(url.toString(), {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+    }).then((res) => res);
+  }
 }

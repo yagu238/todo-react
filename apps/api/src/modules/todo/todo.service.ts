@@ -13,6 +13,7 @@ export class TodoService {
 
   async findAll(): Promise<Todo[]> {
     return await this.todosRepository.find({
+      where: { deleted: false },
       order: { createdAt: 'ASC' },
     });
   }
@@ -25,6 +26,13 @@ export class TodoService {
   async update(id: number, dto: UpdateTodoDTO): Promise<void> {
     await this.todosRepository.update(id, {
       ...dto,
+      updatedAt: new Date(),
+    });
+  }
+
+  async delete(id: number): Promise<void> {
+    await this.todosRepository.update(id, {
+      deleted: true,
       updatedAt: new Date(),
     });
   }

@@ -6,13 +6,14 @@ import { Stack } from '@chakra-ui/react';
 
 interface Props {
   todos: Todo[];
+  onDeleted?: (id: number) => void;
 }
 
 export const TodoListContainer = memo((props: Props) => {
-  const { todos } = props;
+  const { todos, onDeleted } = props;
   return (
     <Stack spacing={8}>
-      <TodoList todos={todos} />
+      <TodoList todos={todos} onDeleted={onDeleted} />
     </Stack>
   );
 });

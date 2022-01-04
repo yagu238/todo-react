@@ -16,8 +16,14 @@ export const TodoPage = memo(() => {
 
   const created = useCallback(
     (todo: Todo) => {
-      const newTodos = todos.concat(todo);
-      setTodos(newTodos);
+      setTodos(todos.concat(todo));
+    },
+    [todos]
+  );
+
+  const deleted = useCallback(
+    (id: number) => {
+      setTodos(todos.filter((todo) => todo.id !== id));
     },
     [todos]
   );
@@ -25,7 +31,7 @@ export const TodoPage = memo(() => {
   return (
     <>
       <TodoCreateContainer onCreated={created} />
-      <TodoListContainer todos={todos}></TodoListContainer>
+      <TodoListContainer todos={todos} onDeleted={deleted} />
     </>
   );
 });

@@ -8,9 +8,11 @@ interface Props {
 }
 
 export const TodoList = memo((props: Props) => {
+  const { todos } = props;
+
   return (
     <Stack spacing={8}>
-      {props.todos.map((todo) => (
+      {todos.map((todo) => (
         <TodoListItem todo={todo}></TodoListItem>
       ))}
     </Stack>

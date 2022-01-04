@@ -11,13 +11,13 @@ export class TodoApi {
     }).then((res) => res.json());
   }
 
-  create(todo: CreateTodoDTO): Promise<Response> {
+  create(todo: CreateTodoDTO): Promise<Todo> {
     const url = new URL(`${this.baseUrl}/todos`);
     return fetch(url.toString(), {
       method: 'POST',
       body: JSON.stringify(todo),
       headers: { 'Content-Type': 'application/json' },
-    }).then((res) => res);
+    }).then((res) => res.json());
   }
 
   update(id: number, todo: UpdateTodoDTO): Promise<Response> {

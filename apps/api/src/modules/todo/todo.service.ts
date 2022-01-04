@@ -17,8 +17,9 @@ export class TodoService {
     });
   }
 
-  async create(dto: CreateTodoDTO): Promise<void> {
-    await this.todosRepository.insert(dto);
+  async create(dto: CreateTodoDTO): Promise<Todo> {
+    const todo = await this.todosRepository.create(dto);
+    return await this.todosRepository.save(todo);
   }
 
   async update(id: number, dto: UpdateTodoDTO): Promise<void> {

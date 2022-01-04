@@ -9,19 +9,17 @@ interface Props {
 }
 
 export const TodoListItem = memo((props: Props) => {
-  const [completedState, setCompletedState] = useState(props.todo.completed);
+  const { todo } = props;
+  const [completedState, setCompletedState] = useState(todo.completed);
 
-  const handleUpdateComplete = useCallback(() => {
-    todoService
-      .update(props.todo.id, {
-        title: props.todo.title,
-        completed: !props.todo.completed,
-      })
-      .then((res) => {
-        if (!res.ok) return;
-        setCompletedState(!completedState);
-      });
-  }, [completedState, props.todo.completed, props.todo.id, props.todo.title]);
+  const handleUpdateComplete = useCallback(async () => {
+    const res = await todoService.update(todo.id, {
+      title: todo.title,
+      completed: !todo.completed,
+    });
+    if (!res.ok) return;
+    setCompletedState(!completedState);
+  }, [completedState, todo.completed, todo.id, todo.title]);
 
   return (
     <Box p={5} shadow="md" borderWidth="1px">
@@ -34,7 +32,7 @@ export const TodoListItem = memo((props: Props) => {
           ></CheckCircleIcon>
         </Center>
         <Box flex="1" ml={4}>
-          <Heading fontSize="xl">{props.todo.title}</Heading>
+          <Heading fontSize="xl">{todo.title}</Heading>
           <Text mt={4}>test................</Text>
         </Box>
       </Flex>

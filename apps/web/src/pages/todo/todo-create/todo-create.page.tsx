@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { Todo } from '@todo/api-interfaces';
 import { todoService } from '../../../lib/apis/todo';
-import { InputControl } from '../../shared/control/input-control';
+import { InputControl } from '../../shared/controls/input-control';
 
 interface Props {
   onCreated?: (todo: Todo) => void;

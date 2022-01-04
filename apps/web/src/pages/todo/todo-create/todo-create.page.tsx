@@ -8,19 +8,15 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure,
-  FormControl,
-  FormLabel,
-  Input,
   Button,
-  FormErrorMessage,
 } from '@chakra-ui/react';
 import { Todo } from '@todo/api-interfaces';
-import { todoService } from '../../lib/apis/todo';
-import { InputControl } from '../shared/control/input-control';
+import { todoService } from '../../../lib/apis/todo';
+import { InputControl } from '../../shared/control/input-control';
 
 interface Props {
   onCreated?: (todo: Todo) => void;
+  onClosed?: () => void;
 }
 
 interface CreateTodoFrom {
@@ -28,8 +24,7 @@ interface CreateTodoFrom {
 }
 
 export const TodoCreate = memo((props: Props) => {
-  const { onCreated } = props;
-  const { onClose } = useDisclosure();
+  const { onCreated, onClosed } = props;
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
@@ -63,7 +58,9 @@ export const TodoCreate = memo((props: Props) => {
             </ModalBody>
 
             <ModalFooter>
-              <Button onClick={onClose}>Cancel</Button>
+              <Button type="button" onClick={() => onClosed?.()}>
+                Cancel
+              </Button>
               <Button
                 colorScheme="teal"
                 isLoading={props.isSubmitting}

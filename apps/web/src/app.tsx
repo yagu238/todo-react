@@ -1,5 +1,5 @@
 import { ChakraProvider, Container, Grid, GridItem } from '@chakra-ui/react';
-import { TodoContainer } from './pages/todo/todo-list-container.page';
+import { TodoPage } from './pages/todo/todo.page';
 
 export function App() {
   return (
@@ -14,7 +14,7 @@ export function App() {
         <GridItem rowSpan={11} colSpan={2} />
         <GridItem rowSpan={11} colSpan={10}>
           <Container maxW="container.xl">
-            <TodoContainer></TodoContainer>
+            <TodoPage></TodoPage>
           </Container>
         </GridItem>
       </Grid>

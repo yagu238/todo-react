@@ -28,6 +28,10 @@ export const TodoCreateContainer = memo((props: Props) => {
     [onClose, onCreated]
   );
 
+  const closed = useCallback(() => {
+    onClose();
+  }, [onClose]);
+
   return (
     <>
       <Flex py={4}>
@@ -47,7 +51,7 @@ export const TodoCreateContainer = memo((props: Props) => {
         </Box>
       </Flex>
       <Modal isOpen={isOpen} onClose={onClose}>
-        <TodoCreate onCreated={created} />
+        <TodoCreate onCreated={created} onClosed={closed} />
       </Modal>
     </>
   );

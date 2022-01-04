@@ -2,7 +2,7 @@ import { memo, useCallback, useState } from 'react';
 import { Box, Center, Flex, Heading, Text } from '@chakra-ui/react';
 import { Todo } from '@todo/api-interfaces';
 import { CheckCircleIcon } from '@chakra-ui/icons';
-import { todoService } from '../../lib/apis/todo';
+import { todoService } from '../../../lib/apis/todo';
 
 interface Props {
   todo: Todo;

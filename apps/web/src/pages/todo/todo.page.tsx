@@ -1,11 +1,11 @@
 import { useState, useEffect, memo, useCallback } from 'react';
 
 import { Todo } from '@todo/api-interfaces';
-import { TodoList } from './todo-list.page';
 import { todoService } from '../../lib/apis/todo';
-import { TodoCreateContainer } from './todo-create-container.page';
+import { TodoCreateContainer } from './todo-create/todo-create-container.page';
+import { TodoListContainer } from './todo-list/todo-list-container.page';
 
-export const TodoContainer = memo(() => {
+export const TodoPage = memo(() => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export const TodoContainer = memo(() => {
   return (
     <>
       <TodoCreateContainer onCreated={created} />
-      <TodoList todos={todos}></TodoList>
+      <TodoListContainer todos={todos}></TodoListContainer>
     </>
   );
 });

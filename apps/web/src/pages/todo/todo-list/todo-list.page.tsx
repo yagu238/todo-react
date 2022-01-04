@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { Stack } from '@chakra-ui/react';
 import { Todo } from '@todo/api-interfaces';
 import { TodoListItem } from './todo-list-item.page';
 
@@ -11,10 +10,10 @@ export const TodoList = memo((props: Props) => {
   const { todos } = props;
 
   return (
-    <Stack spacing={8}>
+    <>
       {todos.map((todo) => (
-        <TodoListItem todo={todo}></TodoListItem>
+        <TodoListItem key={todo.id} todo={todo}></TodoListItem>
       ))}
-    </Stack>
+    </>
   );
 });

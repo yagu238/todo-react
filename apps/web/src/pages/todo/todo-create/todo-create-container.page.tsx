@@ -1,16 +1,16 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, useMemo } from 'react';
 import {
   Box,
   Button,
   Flex,
   Heading,
-  Modal,
   Spacer,
   useDisclosure,
 } from '@chakra-ui/react';
-import { Todo } from '@todo/api-interfaces';
-import { TodoCreate } from './todo-create.page';
+import { CreateTodoDTO, Todo } from '@todo/api-interfaces';
 import { AddIcon } from '@chakra-ui/icons';
+import { todoService } from '../../../lib/apis/todo';
+import { TodoCreate } from './todo-create.page';
 
 interface Props {
   onCreated?: (todo: Todo) => void;
@@ -20,17 +20,16 @@ export const TodoCreateContainer = memo((props: Props) => {
   const { onCreated } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const created = useCallback(
-    (todo: Todo) => {
-      onCreated?.(todo);
+  const create = useCallback(
+    async (dto: CreateTodoDTO) => {
+      const res = await todoService.create(dto);
+      if (!res) return;
+
+      onCreated?.(res);
       onClose();
     },
     [onClose, onCreated]
   );
-
-  const closed = useCallback(() => {
-    onClose();
-  }, [onClose]);
 
   return (
     <>
@@ -50,9 +49,7 @@ export const TodoCreateContainer = memo((props: Props) => {
           </Button>
         </Box>
       </Flex>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <TodoCreate onCreated={created} onClosed={closed} />
-      </Modal>
+      <TodoCreate onCreate={create} isOpen={isOpen} onClose={onClose} />
     </>
   );
 });

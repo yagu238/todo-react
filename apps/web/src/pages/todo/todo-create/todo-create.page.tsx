@@ -2,21 +2,22 @@ import React, { memo, useMemo } from 'react';
 import { Formik, Form, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import {
+  Button,
+  Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
 } from '@chakra-ui/react';
-import { Todo } from '@todo/api-interfaces';
-import { todoService } from '../../../lib/apis/todo';
-import { InputControl } from '../../shared/controls/input-control';
+import InputControl from '../../shared/controls/input-control';
+import { CreateTodoDTO } from '@todo/api-interfaces';
 
 interface Props {
-  onCreated?: (todo: Todo) => void;
-  onClosed?: () => void;
+  isOpen: boolean;
+  onClose: () => void;
+  onCreate: (values: CreateTodoDTO) => Promise<void>;
 }
 
 interface CreateTodoFrom {
@@ -24,55 +25,58 @@ interface CreateTodoFrom {
 }
 
 export const TodoCreate = memo((props: Props) => {
-  const { onCreated, onClosed } = props;
+  const { onCreate, isOpen, onClose } = props;
+
+  const initialValues = useMemo(() => {
+    return { title: '' };
+  }, []);
 
   const validationSchema = useMemo(() => {
     return Yup.object().shape({
-      title: Yup.string().required('Title is required'),
+      title: Yup.string().required('Title は必須です。'),
     });
   }, []);
 
   return (
-    <Formik
-      initialValues={{ title: '' }}
-      validationSchema={validationSchema}
-      onSubmit={async (
-        values: CreateTodoFrom,
-        { setSubmitting }: FormikHelpers<CreateTodoFrom>
-      ) => {
-        const res = await todoService.create(values);
-        if (!res) return;
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={async (
+          values: CreateTodoFrom,
+          { setSubmitting }: FormikHelpers<CreateTodoFrom>
+        ) => {
+          await onCreate(values);
+          setSubmitting(false);
+        }}
+      >
+        {(props) => (
+          <Form>
+            <ModalOverlay />
+            <ModalContent>
+              <ModalHeader>Create Todo</ModalHeader>
+              <ModalCloseButton />
+              <ModalBody pb={6}>
+                <InputControl name="title" label="Title" />
+              </ModalBody>
 
-        onCreated?.(res);
-        setSubmitting(false);
-      }}
-    >
-      {(props) => (
-        <Form>
-          <ModalOverlay />
-          <ModalContent>
-            <ModalHeader>Create Todo</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody pb={6}>
-              <InputControl name="title" label="Title" />
-            </ModalBody>
-
-            <ModalFooter>
-              <Button type="button" onClick={() => onClosed?.()}>
-                Cancel
-              </Button>
-              <Button
-                colorScheme="teal"
-                isLoading={props.isSubmitting}
-                type="submit"
-                ml={2}
-              >
-                Save
-              </Button>
-            </ModalFooter>
-          </ModalContent>
-        </Form>
-      )}
-    </Formik>
+              <ModalFooter>
+                <Button type="button" onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button
+                  colorScheme="teal"
+                  isLoading={props.isSubmitting}
+                  type="submit"
+                  ml={2}
+                >
+                  Save
+                </Button>
+              </ModalFooter>
+            </ModalContent>
+          </Form>
+        )}
+      </Formik>
+    </Modal>
   );
 });

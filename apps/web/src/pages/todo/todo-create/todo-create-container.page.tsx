@@ -34,7 +34,7 @@ export const TodoCreateContainer = memo((props: Props) => {
 
   return (
     <>
-      <Flex py={4}>
+      <Flex py={4} mb={4}>
         <Box p="2">
           <Heading size="md">Todo Items</Heading>
         </Box>
